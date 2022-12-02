@@ -109,7 +109,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "username": "ivan4",
+  "username": "ivan5",
 	"password": "qwerty",
 	"role": "admin"
 }
@@ -121,7 +121,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "username": "ivan3",
+  "username": "ivan5",
 	"password": "qwerty",
 	"role": "admin"
 }

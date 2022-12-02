@@ -1,4 +1,11 @@
+from typing import List, TypeVar
+
+from flask import current_app
+from flask_sqlalchemy import BaseQuery
+from werkzeug.exceptions import NotFound
+
 from dao.model.director import Director
+
 
 
 class DirectorDAO:
@@ -6,10 +13,15 @@ class DirectorDAO:
         self.session = session
 
     def get_one(self, bid):
-        return self.session.query(Director).get(bid)
+        try:
+            director_by_id = self.session.query(Director).get(bid)
+            return director_by_id
+        except Exception as e:
+            return e
 
-    def get_all(self):
-        return self.session.query(Director).all()
+    def get_all(self) -> list:
+
+        return self.session.query(Director)
 
     def create(self, director_d):
         ent = Director(**director_d)

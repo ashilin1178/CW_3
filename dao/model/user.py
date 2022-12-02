@@ -1,18 +1,24 @@
 from marshmallow import Schema, fields
+from sqlalchemy import String, Integer
 
 from setup_db import db
 
 
 class User(db.Model):
     __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String)
-    password = db.Column(db.String)
-    role = db.Column(db.String)
+    id = db.Column(Integer, primary_key=True, autoincrement=True)
+    email = db.Column(String(100), unique=True, nullable=False)
+    password = db.Column(String(255), nullable=False)
+    name = db.Column(String(255))
+    surname = db.Column(String(255))
+    favorite_genre = db.Column(String(100))
+    favorite_movies = db.Column(String(100))
 
 
 class UserSchema(Schema):
     id = fields.Int()
-    username = fields.Str()
+    email = fields.Str()
     password = fields.Str()
-    role = fields.Str()
+    name = fields.Str()
+    favorite_genre = fields.Str()
+    favorite_movies = fields.Str()

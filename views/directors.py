@@ -8,15 +8,15 @@ from decorators import auth_required, admin_required
 director_ns = Namespace('directors')
 
 
-@director_ns.route('/')
+@director_ns.route('/<int:page>')
 class DirectorsView(Resource):
-    @auth_required
-    def get(self):
-        rs = director_service.get_all()
+    # @auth_required
+    def get(self, page):
+        rs = director_service.get_all(page)
         res = DirectorSchema(many=True).dump(rs)
         return res, 200
 
-    @admin_required
+    # @admin_required
     def post(self):
         req_json = request.json
         new_director = director_service.create(**req_json)
@@ -25,13 +25,13 @@ class DirectorsView(Resource):
 
 @director_ns.route('/<int:rid>')
 class DirectorView(Resource):
-    @auth_required
+    # @auth_required
     def get(self, rid):
         r = director_service.get_one(rid)
         sm_d = DirectorSchema().dump(r)
         return sm_d, 200
 
-    @admin_required
+    # @admin_required
     def put(self, rid):
         req_json = request.json
         if "id" not in req_json:
@@ -39,7 +39,7 @@ class DirectorView(Resource):
         director_service.update(req_json)
         return "", 204
 
-    @admin_required
+    # @admin_required
     def delete(self, rid):
         director_service.delete(rid)
         return "", 204
