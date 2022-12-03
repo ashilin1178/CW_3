@@ -12,19 +12,23 @@ movie_ns = Namespace('movies')
 class MoviesView(Resource):
     @auth_required
     def get(self):
-        director = request.args.get("director_id")
-        genre = request.args.get("genre_id")
-        year = request.args.get("year")
+        director_id = request.args.get("director_id", None)
+        genre_id = request.args.get("genre_id", None)
+        year = request.args.get("year", None)
+        status = request.args.get("status", None)
+        page = request.args.get("page", 1)
         filters = {
-            "director_id": director,
-            "genre_id": genre,
-            "year": year,
-        }
+            "director_id": director_id,
+            "genre_id": genre_id,
+            "year": year
+            # "status": status,
+            # "page": page
+         }
         all_movies = movie_service.get_all(filters)
         res = MovieSchema(many=True).dump(all_movies)
         return res, 200
 
-    @admin_required
+    # @admin_required
     def post(self):
         req_json = request.json
         movie = movie_service.create(req_json)
@@ -39,7 +43,7 @@ class MovieView(Resource):
         sm_d = MovieSchema().dump(b)
         return sm_d, 200
 
-    @admin_required
+    # @admin_required
     def put(self, bid):
         req_json = request.json
         if "id" not in req_json:
@@ -47,7 +51,7 @@ class MovieView(Resource):
         movie_service.update(req_json)
         return "", 204
 
-    @admin_required
+    # @admin_required
     def delete(self, bid):
         movie_service.delete(bid)
         return "", 204

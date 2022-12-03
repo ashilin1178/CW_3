@@ -1,6 +1,6 @@
-GET http://127.0.0.1:5000/movies/
+GET http://127.0.0.1:5000/movies/?year=2000
 Accept: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Iml2YW4zIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjY4OTQ4OTk1fQ.LUlXUwfqAmn_xximcU8ke9kITQBExdn_nxYl1jQ780k
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Iml2YW4xIiwibmFtZSI6bnVsbCwic3VybmFtZSI6bnVsbCwiZmF2b3JpdGVfZ2VucmUiOm51bGwsImV4cCI6MTY3MDAzMDIwOH0.bkQeq29e6B2miNAWbApQ44DkwGeX5zXpeyRs3QkN3_4
 
 ###
 
@@ -51,10 +51,19 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Iml2Y
 
 ###
 
-POST http://127.0.0.1:5000//
+POST http://127.0.0.1:5000/movies
 Accept: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Iml2YW4zIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjY4OTQ4OTk1fQ.LUlXUwfqAmn_xximcU8ke9kITQBExdn_nxYl1jQ780k
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Iml2YW41IiwibmFtZSI6bnVsbCwic3VybmFtZSI6bnVsbCwiZmF2b3JpdGVfZ2VucmUiOm51bGwsImV4cCI6MTY4MTIyNDQ2NH0.DEDtxqvJHlDp2zRzr758APIWS2Kea73x5z4YEqWA0Qc
 
+{
+  "title": "-------",
+  "trailer": "-----",
+  "year": 0,
+  "rating": 0,
+  "description": "0 из 10!",
+  "genre_id": 1,
+  "director_id": 1
+}
 
 
 ###
@@ -62,7 +71,7 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Iml2Y
 PUT http://127.0.0.1:5000/movies/21
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Iml2YW4zIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjY4OTQ4OTk1fQ.LUlXUwfqAmn_xximcU8ke9kITQBExdn_nxYl1jQ780k
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Iml2YW41IiwibmFtZSI6bnVsbCwic3VybmFtZSI6bnVsbCwiZmF2b3JpdGVfZ2VucmUiOm51bGwsImV4cCI6MTY2OTk5MjQzMX0.8K60M72Zd1x3hvOYFim_rQkGDlV8N4bIjGUgAeek-qs
 
 {
   "id": 21,
@@ -109,9 +118,9 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "username": "ivan5",
-	"password": "qwerty",
-	"role": "admin"
+  "email": "ivan1",
+  "password": "qwerty"
+
 }
 
 ###
@@ -121,7 +130,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "username": "ivan5",
-	"password": "qwerty",
-	"role": "admin"
+  "email": "ivan1",
+	"password": "qwerty"
+
 }

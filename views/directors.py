@@ -8,11 +8,11 @@ from decorators import auth_required, admin_required
 director_ns = Namespace('directors')
 
 
-@director_ns.route('/<int:page>')
+@director_ns.route('/')
 class DirectorsView(Resource):
-    # @auth_required
-    def get(self, page):
-        rs = director_service.get_all(page)
+    @auth_required
+    def get(self):
+        rs = director_service.get_all()
         res = DirectorSchema(many=True).dump(rs)
         return res, 200
 
@@ -25,7 +25,7 @@ class DirectorsView(Resource):
 
 @director_ns.route('/<int:rid>')
 class DirectorView(Resource):
-    # @auth_required
+    @auth_required
     def get(self, rid):
         r = director_service.get_one(rid)
         sm_d = DirectorSchema().dump(r)
@@ -40,6 +40,6 @@ class DirectorView(Resource):
         return "", 204
 
     # @admin_required
-    def delete(self, rid):
-        director_service.delete(rid)
-        return "", 204
+    # def delete(self, rid):
+    #     director_service.delete(rid)
+    #     return "", 204

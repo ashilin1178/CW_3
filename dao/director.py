@@ -1,11 +1,4 @@
-from typing import List, TypeVar
-
-from flask import current_app
-from flask_sqlalchemy import BaseQuery
-from werkzeug.exceptions import NotFound
-
 from dao.model.director import Director
-
 
 
 class DirectorDAO:

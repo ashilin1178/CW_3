@@ -12,7 +12,7 @@ class UserDAO():
     def get_user_by_id(self, uid):
         return self.session.query(User).filter(User.id == uid).one()
 
-    def get_user_by_username(self, email):
+    def get_user_by_email(self, email):
         return self.session.query(User).filter(User.email == email).one()
 
 
@@ -27,9 +27,9 @@ class UserDAO():
             return False
 
 
-    def edit_user_by_id(self, uid, **kwargs):
+    def edit_user_by_id(self, uid, **user_data):
         try:
-            self.session.query(User).filter(User.id == uid).update(kwargs)
+            self.session.query(User).filter(User.id == uid).update(user_data)
             self.session.commit()
             return True
         except Exception as e:

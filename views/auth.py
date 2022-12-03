@@ -14,12 +14,12 @@ class AuthsView(Resource):
         :return:
         """
         data = request.json
-        username = data.get("username", None)
+        email = data.get("email", None)
         password = data.get("password", None)
 
-        if None in [username, password]:
+        if None in [email, password]:
             return "", 400
-        tokens = auth_service.generate_tokens(username, password)
+        tokens = auth_service.generate_tokens(email, password)
         return tokens, 201
 
     def put(self):
