@@ -11,18 +11,18 @@ class MovieDAO:
     def get_one(self, bid):
         return self.session.query(Movie).get(bid)
 
-    def get_all(self, filters) -> list:
+    def get_all(self, filters: dict) -> list:
         movies_query = self.session.query(Movie)
-        if filters.director_id is not None:
-            movies_query = movies_query.filter(Movie.director_id == filters.director_id)
-        if filters.genre_id is not None:
-            movies_query = movies_query.filter(Movie.genre_id == filters.genre_id)
-        if filters.year is not None:
-            movies_query = movies_query.filter(Movie.year == filters.year)
-        if filters.status is not None and filters.status == 'new':
+        if filters['director_id'] is not None:
+            movies_query = movies_query.filter(Movie.director_id == filters['director_id'])
+        if filters['genre_id'] is not None:
+            movies_query = movies_query.filter(Movie.genre_id == filters['genre_id'])
+        if filters['year'] is not None:
+            movies_query = movies_query.filter(Movie.year == filters['year'])
+        if filters['status'] is not None and filters['status'] == 'new':
             movies_query = movies_query.order_by(desc(Movie.id))
         else:
-            movies_query = movies_query.offset(OFFSET_VALUE * (int(filters.page) - 1)).limit(LIMIT_VALUE)
+            movies_query = movies_query.offset(OFFSET_VALUE * (int(filters['page']) - 1)).limit(LIMIT_VALUE)
 
         return movies_query.all()
 

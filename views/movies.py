@@ -20,9 +20,9 @@ class MoviesView(Resource):
         filters = {
             "director_id": director_id,
             "genre_id": genre_id,
-            "year": year
-            # "status": status,
-            # "page": page
+            "year": year,
+            "status": status,
+            "page": page
          }
         all_movies = movie_service.get_all(filters)
         res = MovieSchema(many=True).dump(all_movies)
