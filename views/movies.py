@@ -16,7 +16,7 @@ class MoviesView(Resource):
         genre_id = request.args.get("genre_id", None)
         year = request.args.get("year", None)
         status = request.args.get("status", None)
-        page = request.args.get("page", 1)
+        page = int(request.args.get("page", 1))
         filters = {
             "director_id": director_id,
             "genre_id": genre_id,

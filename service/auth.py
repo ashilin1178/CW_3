@@ -26,7 +26,6 @@ class AuthsService:
             "name": user.name,
             "surname": user.surname,
             "favorite_genre": user.favorite_genre
-
         }
         # 30 minutes for access_token
         min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)

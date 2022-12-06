@@ -1,6 +1,6 @@
 from sqlalchemy import desc
 
-from constants import LIMIT_VALUE, OFFSET_VALUE
+from constants import PER_PAGE
 from dao.model.movie import Movie
 
 
@@ -19,12 +19,13 @@ class MovieDAO:
             movies_query = movies_query.filter(Movie.genre_id == filters['genre_id'])
         if filters['year'] is not None:
             movies_query = movies_query.filter(Movie.year == filters['year'])
-        if filters['status'] is not None and filters['status'] == 'new':
-            movies_query = movies_query.order_by(desc(Movie.id))
+        if filters['status'] == 'new':
+            movies_query = movies_query.order_by(desc(Movie.id)).paginate(filters['page'], per_page=PER_PAGE)
         else:
-            movies_query = movies_query.offset(OFFSET_VALUE * (int(filters['page']) - 1)).limit(LIMIT_VALUE)
+            movies_query = movies_query.paginate(filters['page'], per_page=PER_PAGE)
 
-        return movies_query.all()
+        return movies_query.items
+
 
     def create(self, **movie_d):
         ent = Movie(**movie_d)

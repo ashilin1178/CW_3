@@ -1,44 +1,50 @@
-from flask import request
+from flask import request, abort
 from flask_restx import Resource, Namespace
 
 from dao.model.user import UserSchema
-from decorators import admin_required
+from decorators import auth_required
 from implemented import user_service
 
-user_ns = Namespace('users')
+user_ns = Namespace('user')
 
 
 @user_ns.route('/')
-class UsersView(Resource):
-
-    def get(self):
-        rs = user_service.get_all()
-        res = UserSchema(many=True).dump(rs)
-        return res, 200
-
-    def post(self):
-        req_json = request.json
-        new_user = user_service.create(**req_json)
-        return "", 201, {"location": f"/users/"}
-
-
-@user_ns.route('/<int:rid>')
 class UserView(Resource):
+    @auth_required
+    def get(self):
+        email = user_service.get_email_by_token()
+        user = user_service.get_by_email(email)
+        user_d = UserSchema().dump(user)
+        return user_d, 200
 
-    def get(self, rid):
-        r = user_service.get_one(rid)
-        sm_d = UserSchema().dump(r)
-        return sm_d, 200
-
-    # @admin_required
-    def put(self, rid):
+    @auth_required
+    def patch(self):
+        email = user_service.get_email_by_token()
+        user = user_service.get_by_email(email)
         req_json = request.json
-        if "id" not in req_json:
-            req_json["id"] = rid
+        req_json.id = user.id
         user_service.update(req_json)
         return "", 204
 
-    # @admin_required
-    def delete(self, rid):
-        user_service.delete(rid)
-        return "", 204
+
+@user_ns.route('/password/')
+class UserView(Resource):
+    @auth_required
+    def put(self):
+        req_json = request.json
+        old_password = req_json['old_password']
+        new_password = req_json['new_password']
+        if "Authorization" not in request.headers:
+            abort(401)
+        old_hash_password = user_service.get_old_hash_password()
+
+        if user_service.compare_passwords(old_hash_password, old_password):
+            email = user_service.get_email_by_token()
+            user = user_service.get_by_email(email)
+            user.password = user_service.get_hash(new_password)
+            result = UserSchema().dump(user)
+            try:
+                user_service.update(result)
+                return "пароль изменен", 204
+            except Exception as e:
+                return "пароль не изменен", e

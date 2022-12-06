@@ -33,7 +33,7 @@ class UserDAO():
             self.session.commit()
             return True
         except Exception as e:
-            print(e)
+            print('ошибка DAO.edit_user_by_id', e)
             self.session.rollback()
             return False
 

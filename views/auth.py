@@ -1,11 +1,21 @@
 from flask import request
 from flask_restx import Namespace, Resource
-from implemented import auth_service
+from implemented import auth_service, user_service
 
 auth_ns = Namespace('auth')
 
 
-@auth_ns.route('/')
+@auth_ns.route('/register/')
+class AuthsView(Resource):
+    def post(self):
+        req_json = request.json
+        try:
+            user_service.create(**req_json)
+        except Exception as e:
+            return e
+        return "", 201, {"location": f"/users/"}
+
+@auth_ns.route('/login/')
 class AuthsView(Resource):
 
     def post(self):
@@ -18,7 +28,7 @@ class AuthsView(Resource):
         password = data.get("password", None)
 
         if None in [email, password]:
-            return "", 400
+            return "введите email и пароль", 400
         tokens = auth_service.generate_tokens(email, password)
         return tokens, 201
 

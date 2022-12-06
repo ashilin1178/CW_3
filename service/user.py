@@ -2,7 +2,10 @@ import base64
 import hashlib
 import hmac
 
-from constants import PWD_HASH_SALT, PWD_HASH_ITERATIONS
+import jwt
+from flask import request, abort
+
+from constants import PWD_HASH_SALT, PWD_HASH_ITERATIONS, JWT_SECRET, JWT_ALGORITHM
 from dao.user import UserDAO
 
 
@@ -60,3 +63,26 @@ class UserService:
         )
 
         return hmac.compare_digest(decoded_digest, hash_digest)
+
+    def get_old_hash_password(self):
+        email = self.get_email_by_token()
+        user = self.get_by_email(email)
+        return user.password
+
+    def get_email_by_token(self):
+        data = request.headers["Authorization"]
+        token = data.split(" ")[-1]
+        try:
+            user = jwt.decode(token, JWT_SECRET, algorithms=JWT_ALGORITHM)
+            email = user.get("email")
+            return email
+        except Exception as e:
+            print("JWT Decode Exception", e)
+            abort(401)
+
+
+
+
+
+
+

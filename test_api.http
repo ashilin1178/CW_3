@@ -113,24 +113,38 @@ Accept: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Iml2YW4zIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjY4OTQ4OTk1fQ.LUlXUwfqAmn_xximcU8ke9kITQBExdn_nxYl1jQ780k
 
 ###
-POST http://127.0.0.1:5000/users
+POST http://127.0.0.1:5000/auth/register
 Accept: application/json
 Content-Type: application/json
 
 {
-  "email": "ivan1",
+  "email": "ivan6",
   "password": "qwerty"
 
 }
 
 ###
 
-POST http://127.0.0.1:5000/auth
+POST http://127.0.0.1:5000/auth/login
 Accept: application/json
 Content-Type: application/json
 
 {
-  "email": "ivan1",
-	"password": "qwerty"
-
+  "email": "ivan6",
+  "password": "qwerty"
 }
+
+###
+PUT http://127.0.0.1:5000/auth/login/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Iml2YW42IiwibmFtZSI6bnVsbCwic3VybmFtZSI6bnVsbCwiZmF2b3JpdGVfZ2VucmUiOm51bGwsImV4cCI6MTY3MDMwODc4Mn0.1-1yPyossPoFCe3S5fWNrMTdJAcbvDUciq_RlD2qDZo",
+  "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Iml2YW42IiwibmFtZSI6bnVsbCwic3VybmFtZSI6bnVsbCwiZmF2b3JpdGVfZ2VucmUiOm51bGwsImV4cCI6MTY4MTUzODk4Mn0.P_aPfnNDxwY6wAIxyZZbg1VvKO_Slh3K_Nzhm-XMNWE"
+}
+
+###
+PUT http://127.0.0.1:5000/user/2
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Iml2YW4zIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNjY4OTQ4OTk1fQ.LUlXUwfqAmn_xximcU8ke9kITQBExdn_nxYl1jQ780k
