@@ -19,12 +19,11 @@ class UserView(Resource):
 
     @auth_required
     def patch(self):
+
         email = user_service.get_email_by_token()
-        user = user_service.get_by_email(email)
         req_json = request.json
-        req_json.id = user.id
-        user_service.update(req_json)
-        return "", 204
+        user_service.update(email, req_json)
+        return "данные обновлены", 204
 
 
 @user_ns.route('/password/')

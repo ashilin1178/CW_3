@@ -40,7 +40,7 @@ class MovieDAO:
 
     def update(self, movie_d):
         try:
-            movie = self.session.query(Movie).filter(Movie.id == movie_d.id).update(movie_d)
+            movie = self.session.query(Movie).filter(Movie.id == movie_d.id).update(**movie_d)
             self.session.add(movie)
             self.session.commit()
         except Exception as e:

@@ -26,8 +26,9 @@ class UserService:
         user_data["password"] = self.get_hash(user_data["password"])
         return self.dao.create_user(**user_data)
 
-    def update(self, uid, user_data):
-        user_data["password"] = self.get_hash(user_data["password"])
+    def update(self, email, user_data):
+        uid = self.get_by_email(email).id
+
         return self.dao.edit_user_by_id(uid, **user_data)
 
     def delete(self, uid):
@@ -79,10 +80,3 @@ class UserService:
         except Exception as e:
             print("JWT Decode Exception", e)
             abort(401)
-
-
-
-
-
-
-

@@ -12,8 +12,8 @@ class AuthsView(Resource):
         try:
             user_service.create(**req_json)
         except Exception as e:
-            return e
-        return "", 201, {"location": f"/users/"}
+            return e, 400
+        return "User created", 201, {"location": f"/users/"}
 
 @auth_ns.route('/login/')
 class AuthsView(Resource):
