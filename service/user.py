@@ -28,8 +28,12 @@ class UserService:
 
     def update(self, email, user_data):
         uid = self.get_by_email(email).id
+        try:
+            result = self.dao.edit_user_by_id(uid, user_data)
+        except Exception as e:
+            return e
 
-        return self.dao.edit_user_by_id(uid, **user_data)
+        return result
 
     def delete(self, uid):
         self.dao.delete_user_by_id(uid)

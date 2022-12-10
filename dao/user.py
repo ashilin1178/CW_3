@@ -25,11 +25,9 @@ class UserDAO:
             return False
 
     def edit_user_by_id(self, uid, user_data):
-        user = self.session.query(User).filter(User.id == uid)
-        try:
-            user = user.update(**user_data)
 
-            self.session.add(user)
+        try:
+            self.session.query(User).filter(User.id == uid).update(user_data)
             self.session.commit()
             return True
         except Exception as e:
